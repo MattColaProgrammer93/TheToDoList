@@ -10,13 +10,34 @@ window.onload = function () {
     addItem.onclick = main;
 };
 function main() {
+    clearErrors();
     if (isValid()) {
         var item = getToDoItem();
         displayToDoItem(item);
     }
 }
 function isValid() {
-    return true;
+    var isValid = true;
+    var title = getInputById("assignment-title").value;
+    if (title == "" || title == null) {
+        isValid = false;
+        displayError("assignment-title", "A title is required");
+    }
+    var date = getInputById("due-date").value;
+    if (date == null) {
+        isValid = false;
+        displayError("assignment-title", "A title is required");
+    }
+    return isValid;
+}
+function displayError(id, errMsg) {
+    var errorText = getInputById(id);
+    var errSpan = errorText.nextElementSibling;
+    errSpan.innerText = errMsg;
+}
+function clearErrors() {
+    var errSummary = getById("validation-summary");
+    errSummary.innerText = "";
 }
 function getToDoItem() {
     var myItem = new ToDoItem;

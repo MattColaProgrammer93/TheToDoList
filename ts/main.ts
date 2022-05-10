@@ -21,6 +21,9 @@ window.onload = function(){
 }
 
 function main(){
+    // Will reset any error messages present
+    clearErrors();
+
     if(isValid()){
         let item = getToDoItem();
         displayToDoItem(item);
@@ -31,7 +34,39 @@ function main(){
     Check form data is valid
 */
 function isValid():boolean{
-    return true;
+    let isValid = true;
+
+    let title = getInputById("assignment-title").value;
+    if (title == "" || title == null){
+        isValid = false;
+        displayError("assignment-title", "A title is required");
+    }
+
+    let date = getInputById("due-date").value;
+    if (date == null){
+        isValid = false;
+        displayError("assignment-title", "A title is required");
+    }
+
+    return isValid;
+}
+
+/**
+ * Will add error messages to the webpage
+ */
+
+ function displayError(id:string, errMsg:string) {
+    let errorText = getInputById(id);
+    let errSpan = <HTMLSpanElement>errorText.nextElementSibling;
+    errSpan.innerText = errMsg;
+}
+
+/**
+ * Will reset any error messages that is on the web page
+ */
+ function clearErrors(){
+    let errSummary = getById("validation-summary");
+    errSummary.innerText = "";
 }
 
 /**
