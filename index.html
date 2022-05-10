@@ -10,8 +10,8 @@
 <body>
 	<h1>The To-Do List</h1>
 
-    <label for="assignment">Assingment Title</label>
-    <input type="text" id="assingment">
+    <label for="assignment-title">Assingment Title</label>
+    <input type="text" id="assingment-title">
     <span>*</span>
     <br>
 
@@ -20,12 +20,19 @@
     <span>*</span>
     <br>
 
-    <input type="checkbox">
-    <label for="finished">Is the assignment finished?</label>
+    <input type="checkbox" id="is-finished">
+    <label for="is-finished">Is the assignment finished?</label>
     <br>
 
     <input type="button" value="Add Assignment">
+    <br>
+
+    <!--Displays the ToDoItem/Assignments here-->
+    <h3>ToDo Items</h3>
+    <div id="incomplete-item"></div>
+    <div id="complete-item"></div>
 
     <script src="https://unpkg.com/js-datepicker"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
