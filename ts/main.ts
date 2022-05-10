@@ -69,6 +69,9 @@ function displayToDoItem(item:ToDoItem):void{
 
     // ex. <div class="todo finished"></div> or <div class="todo"></div>
     let itemDiv = document.createElement("div");
+
+    itemDiv.onclick = markAsFinished;
+
     itemDiv.classList.add("todo");
     if (item.isFinished){
         itemDiv.classList.add("finished");
@@ -90,6 +93,16 @@ function displayToDoItem(item:ToDoItem):void{
         let isAssignmentNotFinished = getById("incomplete-items");
         isAssignmentNotFinished.appendChild(itemDiv);
     }
+}
+
+function markAsFinished(){
+    let itemDiv = <HTMLElement>this;
+    console.log(itemDiv);
+    itemDiv.classList.add("finished");
+
+    let finishedItems = getById("complete-items");
+    console.log(finishedItems);
+    finishedItems.appendChild(itemDiv);
 }
 
 // Shortcut for getElementById

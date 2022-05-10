@@ -5,6 +5,7 @@
     padding: .25em;
     border-radius: .75em;
     margin: 1em;
+    cursor: pointer;
 }
 
 .todo h3{
@@ -15,9 +16,19 @@
     margin:0px;
 }
 
-.completed{
-    opacity: 50%;
+.finished{
+    opacity: 40%;
     background-color: rgb(33, 36, 219);
+    text-decoration: line-through;
+}
+
+#complete-items{
+    border: .2em solid lightblue;
+}
+
+#incomplete-items{
+    border: .1em solid black;
+    margin-bottom: 1em;
 }
 
 h1{
@@ -39,4 +50,12 @@ body {
 input[type=text]{
     padding: .3em;
     margin-bottom: 1em;
+}
+
+input[type=text]:hover{
+    background-color:lightblue;
+}
+
+input[type=button]:hover{
+    background-color: lightcoral;
 }
