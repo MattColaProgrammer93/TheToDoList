@@ -1,0 +1,42 @@
+.todo{
+    width:30%;
+    box-sizing: border-box;
+    background-color: rgb(233, 17, 17);
+    padding: .25em;
+    border-radius: .75em;
+    margin: 1em;
+}
+
+.todo h3{
+    margin:0px;
+}
+
+.todo p{
+    margin:0px;
+}
+
+.completed{
+    opacity: 50%;
+    background-color: rgb(33, 36, 219);
+}
+
+h1{
+    font-family: Arial;
+}
+
+input[type=button] {
+    width: 145px;
+    height: 40px;
+    background-color: rgb(235, 95, 95);
+}
+
+body {
+    background-color:rgb(127, 17, 17);
+    margin-left:5%;
+    margin-right:5%;
+}
+
+input[type=text]{
+    padding: .3em;
+    margin-bottom: 1em;
+}
