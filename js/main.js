@@ -52,8 +52,11 @@ function displayToDoItem(item) {
 }
 function markAsFinished() {
     var itemDiv = this;
+    console.log(itemDiv);
     itemDiv.classList.add("finished");
     var finishedItems = getById("complete-items");
+    console.log(finishedItems);
+    finishedItems.appendChild(itemDiv);
 }
 function getById(id) {
     return document.getElementById(id);
