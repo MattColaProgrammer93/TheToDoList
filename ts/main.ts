@@ -3,7 +3,7 @@ const picker = datepicker("#due-date");
 picker.setMin(new Date()); // Set to today's date
 
 class ToDoItem{
-    assignmentTitle:string;
+    title:string;
     dueDate:Date;
     isFinished:boolean;
 }
@@ -22,7 +22,7 @@ window.onload = function(){
 
 function main(){
     // Will reset any error messages present
-    clearErrors();
+    resetErrorMessages();
 
     if(isValid()){
         let item = getToDoItem();
@@ -36,16 +36,16 @@ function main(){
 function isValid():boolean{
     let isValid = true;
 
-    let title = getInputById("assignment-title").value;
+    let title = getInputById("assingment-title").value;
     if (title == "" || title == null){
         isValid = false;
-        displayError("assignment-title", "A title is required");
+        displayError("Title is required");
     }
 
     let date = getInputById("due-date").value;
     if (date == null){
         isValid = false;
-        displayError("assignment-title", "A title is required");
+        displayError("Date is required");
     }
 
     return isValid;
@@ -55,16 +55,18 @@ function isValid():boolean{
  * Will add error messages to the webpage
  */
 
- function displayError(id:string, errMsg:string) {
-    let errorText = getInputById(id);
-    let errSpan = <HTMLSpanElement>errorText.nextElementSibling;
-    errSpan.innerText = errMsg;
+ function displayError(errMsg:string) {
+    let errSummary = getById("validation-summary");
+    let errItem = document.createElement("li");
+    errItem.innerText = errMsg;
+
+    errSummary.appendChild(errItem);
 }
 
 /**
  * Will reset any error messages that is on the web page
  */
- function clearErrors(){
+ function resetErrorMessages():void{
     let errSummary = getById("validation-summary");
     errSummary.innerText = "";
 }
@@ -76,8 +78,8 @@ function isValid():boolean{
 function getToDoItem():ToDoItem{
     let myItem = new ToDoItem;
     // get assignmentTitle
-    let titleInput = getInputById("assignment-title");
-    myItem.assignmentTitle = titleInput.value;
+    let titleInput = getInputById("assingment-title");
+    myItem.title = titleInput.value;
 
     // get dueDate
     let dueDateInput = getInputById("due-date");
@@ -96,7 +98,7 @@ function getToDoItem():ToDoItem{
 function displayToDoItem(item:ToDoItem):void{
     // ex. <h3>Rectangles and Circles</h3>
     let itemText = document.createElement("h3");
-    itemText.innerText = item.assignmentTitle;
+    itemText.innerText = item.title;
 
     // ex. <p>May 4th 2022</p>
     let itemDate = document.createElement("p");

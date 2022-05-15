@@ -10,7 +10,7 @@ window.onload = function () {
     addItem.onclick = main;
 };
 function main() {
-    clearErrors();
+    resetErrorMessages();
     if (isValid()) {
         var item = getToDoItem();
         displayToDoItem(item);
@@ -18,31 +18,32 @@ function main() {
 }
 function isValid() {
     var isValid = true;
-    var title = getInputById("assignment-title").value;
+    var title = getInputById("assingment-title").value;
     if (title == "" || title == null) {
         isValid = false;
-        displayError("assignment-title", "A title is required");
+        displayError("Title is required");
     }
     var date = getInputById("due-date").value;
     if (date == null) {
         isValid = false;
-        displayError("assignment-title", "A title is required");
+        displayError("Date is required");
     }
     return isValid;
 }
-function displayError(id, errMsg) {
-    var errorText = getInputById(id);
-    var errSpan = errorText.nextElementSibling;
-    errSpan.innerText = errMsg;
+function displayError(errMsg) {
+    var errSummary = getById("validation-summary");
+    var errItem = document.createElement("li");
+    errItem.innerText = errMsg;
+    errSummary.appendChild(errItem);
 }
-function clearErrors() {
+function resetErrorMessages() {
     var errSummary = getById("validation-summary");
     errSummary.innerText = "";
 }
 function getToDoItem() {
     var myItem = new ToDoItem;
-    var titleInput = getInputById("assignment-title");
-    myItem.assignmentTitle = titleInput.value;
+    var titleInput = getInputById("assingment-title");
+    myItem.title = titleInput.value;
     var dueDateInput = getInputById("due-date");
     myItem.dueDate = new Date(dueDateInput.value);
     var isFinished = getInputById("is-finished");
@@ -51,7 +52,7 @@ function getToDoItem() {
 }
 function displayToDoItem(item) {
     var itemText = document.createElement("h3");
-    itemText.innerText = item.assignmentTitle;
+    itemText.innerText = item.title;
     var itemDate = document.createElement("p");
     itemDate.innerText = item.dueDate.toDateString();
     var itemDiv = document.createElement("div");
