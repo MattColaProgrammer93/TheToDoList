@@ -18,6 +18,21 @@ item.isFinished = false;
 window.onload = function(){
     let addItem = getById("add");
     addItem.onclick = main;
+
+    // Load saved item
+    loadSavedItems();
+}
+
+/**
+ * Loads the item from storage
+ */
+function loadSavedItems(){
+    let itemArray = getToDoItems(); // read from storage
+    
+    for(let i = 0; i < itemArray.length; i++){
+        let currItem = itemArray[i];
+        displayToDoItem(currItem);
+    }
 }
 
 function main(){
@@ -27,6 +42,7 @@ function main(){
     if(isValid()){
         let item = getToDoItem();
         displayToDoItem(item);
+        saveToDoItems(item);
     }
 }
 
@@ -36,7 +52,7 @@ function main(){
 function isValid():boolean{
     let isValid = true;
 
-    let title = getInputById("assingment-title").value;
+    let title = getInputById("assignment-title").value;
     if (title == "" || title == null){
         isValid = false;
         displayError("Title is required");
@@ -78,7 +94,7 @@ function isValid():boolean{
 function getToDoItem():ToDoItem{
     let myItem = new ToDoItem;
     // get assignmentTitle
-    let titleInput = getInputById("assingment-title");
+    let titleInput = getInputById("assignment-title");
     myItem.title = titleInput.value;
 
     // get dueDate
@@ -102,7 +118,9 @@ function displayToDoItem(item:ToDoItem):void{
 
     // ex. <p>May 4th 2022</p>
     let itemDate = document.createElement("p");
-    itemDate.innerText = item.dueDate.toDateString();
+    // itemDate.innerText = item.dueDate.toDateString();
+    let dueDate = new Date(item.dueDate.toString());
+    itemDate.innerText = dueDate.toDateString();
 
     // ex. <div class="todo finished"></div> or <div class="todo"></div>
     let itemDiv = document.createElement("div");
@@ -141,6 +159,31 @@ function markAsFinished(){
     console.log(finishedItems);
     finishedItems.appendChild(itemDiv);
 }
+/**
+ * Will save ToDo items into storage
+ */
+function saveToDoItems(item:ToDoItem):void{
+    let currItems = getToDoItems();
+    if(currItems == null){ // No items found
+        currItems = new Array();
+    }
+    currItems.push(item); // Add new item to the curr item
+
+    let currItemsStrings = JSON.stringify(currItems);
+    localStorage.setItem(todokey, currItemsStrings);
+}
+/**
+ * Get stored ToDo items or 
+ * returns null if none are found
+ */
+function getToDoItems():ToDoItem[]{
+    let itemString = localStorage.getItem(todokey);
+    let item:ToDoItem[] = JSON.parse(itemString);
+    return item;
+}
+
+// Acts a key for "todo"
+const todokey = "todo";
 
 // Shortcut for getElementById
 function getById(id:string){

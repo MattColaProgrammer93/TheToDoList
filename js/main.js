@@ -8,17 +8,26 @@ var ToDoItem = (function () {
 window.onload = function () {
     var addItem = getById("add");
     addItem.onclick = main;
+    loadSavedItems();
 };
+function loadSavedItems() {
+    var itemArray = getToDoItems();
+    for (var i = 0; i < itemArray.length; i++) {
+        var currItem = itemArray[i];
+        displayToDoItem(currItem);
+    }
+}
 function main() {
     resetErrorMessages();
     if (isValid()) {
         var item = getToDoItem();
         displayToDoItem(item);
+        saveToDoItems(item);
     }
 }
 function isValid() {
     var isValid = true;
-    var title = getInputById("assingment-title").value;
+    var title = getInputById("assignment-title").value;
     if (title == "" || title == null) {
         isValid = false;
         displayError("Title is required");
@@ -42,7 +51,7 @@ function resetErrorMessages() {
 }
 function getToDoItem() {
     var myItem = new ToDoItem;
-    var titleInput = getInputById("assingment-title");
+    var titleInput = getInputById("assignment-title");
     myItem.title = titleInput.value;
     var dueDateInput = getInputById("due-date");
     myItem.dueDate = new Date(dueDateInput.value);
@@ -54,7 +63,8 @@ function displayToDoItem(item) {
     var itemText = document.createElement("h3");
     itemText.innerText = item.title;
     var itemDate = document.createElement("p");
-    itemDate.innerText = item.dueDate.toDateString();
+    var dueDate = new Date(item.dueDate.toString());
+    itemDate.innerText = dueDate.toDateString();
     var itemDiv = document.createElement("div");
     itemDiv.onclick = markAsFinished;
     itemDiv.classList.add("todo");
@@ -80,6 +90,21 @@ function markAsFinished() {
     console.log(finishedItems);
     finishedItems.appendChild(itemDiv);
 }
+function saveToDoItems(item) {
+    var currItems = getToDoItems();
+    if (currItems == null) {
+        currItems = new Array();
+    }
+    currItems.push(item);
+    var currItemsStrings = JSON.stringify(currItems);
+    localStorage.setItem(todokey, currItemsStrings);
+}
+function getToDoItems() {
+    var itemString = localStorage.getItem(todokey);
+    var item = JSON.parse(itemString);
+    return item;
+}
+var todokey = "todo";
 function getById(id) {
     return document.getElementById(id);
 }
